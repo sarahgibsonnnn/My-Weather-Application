@@ -1,0 +1,32 @@
+header {
+  margin: 30px 0px;
+  white-space: nowrap;
+}
+a {
+  color: black;
+}
+a:hover {
+  color: black;
+}
+.icon {
+  text-align: center;
+  padding: 10px;
+}
+
+.card-text {
+  text-align: center;
+}
+.card-title {
+  text-align: center;
+}
+.input-group {
+  margin: 30px 0px;
+  justify-content: flex-end;
+}
+.form-control {
+  max-width: 500px;
+}
+.units{
+  color: black;
+  font-size: 16px;
+}

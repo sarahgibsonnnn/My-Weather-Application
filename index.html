@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weather</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+        <link rel="stylesheet" href="src/styles.css" />
+</head>
+<body>
+    <div class="container">
+    <form id = "search-form">
+    <div class="input-group mb-3" id = "search-form">
+        <input type="text" class="form-control" placeholder="Search Location" aria-label="Location"
+            aria-describedby="button-addon2" id = "search-input" >
+        <div class="input-group-append">
+            <button class="btn btn-outline-secondary" type="submit" id="button-addon2">Search</button>
+        </div>
+    </div>
+</form>
+        <header>
+            <div class = "row">
+                <div class="col-6">
+                    <div>
+                        <h1 class = "current-loc">
+                      Cambridge
+                         </h1>
+                         <h3 id = "current-date-time">
+                             Tuesday 16:18
+                         </h3>
+                    </div>
+                         
+                </div>
+                <div class="col-6">
+                    <div class = "float-right">
+                       <h1>
+                           <span class = "emoji">
+                               🌩
+                           </span> 
+                           <span class="current-temp">
+                                 19
+                            </span>
+                           <span class = "units">
+                               <a href="#" id = "celcius-link">°C</a> /
+                                <a href="#" id = fahrenheit-link>°F</a>
+                           </span>
+                            
+                        </h1>          
+                    </div>
+                </div>
+            
+                     
+            </div>
+         
+        </header>
+        <div class="forecast row">
+            <div class="col">
+                <div class="card">
+                    <h2 class="icon">
+                        ☀
+                    </h2>
+                    <div class="card-body">
+                        <h5 class="card-title">Monday</h5>
+                        <p class="card-text">
+                            10 °C
+                        </p>
+                    </div>
+                </div>
+            </div>
+        <div class="col">
+            <div class="card">
+                <h2 class="icon">
+                    🌧
+                </h2>
+                <div class="card-body">
+                    <h5 class="card-title">Tuesday</h5>
+                    <p class="card-text">
+                        12 °C
+                    </p>
+                </div>
+            </div>
+        </div>
+        <div class="col">
+            <div class="card" >
+                <h2 class="icon">
+                    💨
+                    </h2>
+                <div class="card-body">
+                    <h5 class="card-title">Wednesday</h5>
+                    <p class="card-text">
+                        9 °C
+                    </p>
+                </div>
+            </div>
+        </div>
+        <div class="col">
+            <div class="card">
+                <h2 class="icon">
+                    🌨
+                </h2>
+                <div class="card-body">
+                    <h5 class="card-title">Thursday</h5>
+                    <p class="card-text">
+                        5 °C
+                    </p>
+                </div>
+            </div>
+        </div>
+        <div class="col">
+            <div class="card">
+                <h2 class="icon">
+                    ☀
+                </h2>
+                <div class="card-body">
+                    <h5 class="card-title">Friday</h5>
+                    <p class="card-text">
+                        11 °C
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        </div>
+   
+    </div>
+    <script src="src/app.js"></script>
+
+</body>
+</html>
