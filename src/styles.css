@@ -26,7 +26,10 @@ a:hover {
 .form-control {
   max-width: 500px;
 }
-.units{
+.units {
   color: black;
   font-size: 16px;
+}
+.current {
+  margin: 30px 0px;
 }
