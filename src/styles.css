@@ -39,10 +39,11 @@ a:hover {
 .fa-wind {
   color: grey
 }
-.fa-sun {
-  color: rgb(255, 230, 87);
-  font-size: 50px;
+.current-description{
+  font-size: 20px;
+  margin-right: 10px;
 }
+
 
 .fa-arrow-down {
   color: grey
