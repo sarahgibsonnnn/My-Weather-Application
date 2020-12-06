@@ -5,27 +5,38 @@ let displayPrecipitation = document.querySelector("#precipitation");
 let displayWindSpeed = document.querySelector("#wind-speed");
 let displayWindDirection = document.querySelector("#wind-direction");
 let currentUnits = "Celcius";
+let apiKey = "d039aea9f001c8513436c79fb9e6958c";
 
 celciusToggle.style.fontWeight = "bold";
 
-function showCurrentWeather(response) {
-  let temperature = Math.round(response.data.main.temp);
-  console.log(response);
+function getForecast(response) {
+  alert("test")
+}
+function showCity(response) {
   let location = response.data.name;
   let header = document.querySelector(".current-loc");
   header.innerHTML = location;
+}
+function showCurrentWeather(response) {
+  
+  let temperature = Math.round(response.data.current.temp);
   displayTemp.innerHTML = temperature;
-  let windSpeed = Math.round(response.data.wind.speed);
-  let windDirection = response.data.wind.deg;
+  let windSpeed = Math.round(response.data.current.wind_speed);
+  let windDirection = response.data.current.wind_deg;
+  let precipitation = Math.round(response.data.daily[0].pop *100);
   displayWindSpeed.innerHTML = `${windSpeed} mph`;
-  displayWindDirection.style.transform = `rotate(${windDirection}deg)`
+  displayWindDirection.style.transform = `rotate(${windDirection}deg)`;
+  displayPrecipitation.innerHTML = `${precipitation} %`;
+  //let forecastAPI = `api.openweathermap.org/data/2.5/forecast?q=${location}&appid=${apiKey}`;
+  //axios.get(forecastAPI).then(getForecast);
 }
 
 function getLocation(position) {
   let latitude = position.coords.latitude;
   let longitude = position.coords.longitude;
-  let apiKey = "d039aea9f001c8513436c79fb9e6958c";
-  let apiURL = `https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&appid=${apiKey}&units=metric`;
+  let apiURL = `https://api.openweathermap.org/data/2.5/onecall?lat=${latitude}&lon=${longitude}&appid=${apiKey}&units=metric`
+  let cityAPIURL = `https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&appid=${apiKey}&units=metric`;
+  axios.get(cityAPIURL).then(showCity);
   axios.get(apiURL).then(showCurrentWeather);
 }
 
