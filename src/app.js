@@ -1,6 +1,9 @@
 let fahrenheightToggle = document.querySelector("#fahrenheit-link");
 let celciusToggle = document.querySelector("#celcius-link");
 let displayTemp = document.querySelector(".current-temp");
+let currentUnits = "Celcius";
+
+celciusToggle.style.fontWeight = "bold";
 
 function showCurrentWeather(response) {
   let temperature = Math.round(response.data.main.temp);
@@ -23,6 +26,8 @@ let currentButton = document.querySelector(".current");
 function getCurrent() {
   navigator.geolocation.getCurrentPosition(getLocation);
 }
+
+getCurrent()
 
 currentButton.addEventListener("click", getCurrent);
 
@@ -64,11 +69,21 @@ function searchCity(event) {
 searchForm.addEventListener("submit", searchCity);
 
 function showFahrenheit() {
-  displayTemp.innerHTML = "66";
+  if (currentUnits === "Celcius") {
+    displayTemp.innerHTML = Math.round(displayTemp.innerHTML * (9/5) + 32);
+    currentUnits = "Fahrenheit"
+    fahrenheightToggle.style.fontWeight = "bold"
+    celciusToggle.style.fontWeight = "normal"
+  }  
 }
 
 function showCelcius() {
-  displayTemp.innerHTML = "19";
+  if (currentUnits === "Fahrenheit") {
+    displayTemp.innerHTML = Math.round((displayTemp.innerHTML -32) * (5/9));
+    currentUnits = "Celcius"
+    fahrenheightToggle.style.fontWeight = "normal"
+    celciusToggle.style.fontWeight = "bold"
+  }  
 }
 
 fahrenheightToggle.addEventListener("click", showFahrenheit);
