@@ -4,14 +4,13 @@ let displayTemp = document.querySelector(".current-temp");
 let displayPrecipitation = document.querySelector("#precipitation");
 let displayWindSpeed = document.querySelector("#wind-speed");
 let displayWindDirection = document.querySelector("#wind-direction");
+let displayWeatherDescription = document.querySelector("#current-weather-description");
 let currentUnits = "Celcius";
 let apiKey = "d039aea9f001c8513436c79fb9e6958c";
 
 celciusToggle.style.fontWeight = "bold";
 
-function getForecast(response) {
-  alert("test")
-}
+
 function showCity(response) {
   let location = response.data.name;
   let header = document.querySelector(".current-loc");
@@ -24,9 +23,12 @@ function showCurrentWeather(response) {
   let windSpeed = Math.round(response.data.current.wind_speed);
   let windDirection = response.data.current.wind_deg;
   let precipitation = Math.round(response.data.daily[0].pop *100);
+  console.log(response);
+  let weatherDescription = response.data.current.weather[0].main;
   displayWindSpeed.innerHTML = `${windSpeed} mph`;
   displayWindDirection.style.transform = `rotate(${windDirection}deg)`;
   displayPrecipitation.innerHTML = `${precipitation} %`;
+  displayWeatherDescription.innerHTML = weatherDescription;
   //let forecastAPI = `api.openweathermap.org/data/2.5/forecast?q=${location}&appid=${apiKey}`;
   //axios.get(forecastAPI).then(getForecast);
 }
