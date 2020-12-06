@@ -12,6 +12,7 @@
     />
     <link rel="stylesheet" href="src/styles.css" />
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src="https://kit.fontawesome.com/aabb574e7c.js" crossorigin="anonymous"></script>
   </head>
   <body>
     <div class="container">
@@ -54,17 +55,17 @@
               <h1 class="current-loc">
                 
               </h1>
+              
               <h3 id="current-date-time">
                 
               </h3>
+              <i class="fas fa-sun"></i>
             </div>
           </div>
           <div class="col-6">
             <div class="float-right">
               <h1>
-                <span class="emoji">
-                  🌩
-                </span>
+               
                 <span class="current-temp">
                   
                 </span>
@@ -73,6 +74,16 @@
                   <a href="#" id="fahrenheit-link">°F</a>
                 </span>
               </h1>
+              <div>
+                  <i class="fas fa-tint"></i>
+                  <span id = "precipitation"> Precipitation </span>
+              </div>
+              <div>
+                <i class="fas fa-wind"></i> 
+                
+                <span id = "wind-speed"> wind</span>
+                <i class="fas fa-arrow-down" id = "wind-direction"></i>
+              </div>
             </div>
           </div>
         </div>

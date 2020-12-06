@@ -1,16 +1,24 @@
 let fahrenheightToggle = document.querySelector("#fahrenheit-link");
 let celciusToggle = document.querySelector("#celcius-link");
 let displayTemp = document.querySelector(".current-temp");
+let displayPrecipitation = document.querySelector("#precipitation");
+let displayWindSpeed = document.querySelector("#wind-speed");
+let displayWindDirection = document.querySelector("#wind-direction");
 let currentUnits = "Celcius";
 
 celciusToggle.style.fontWeight = "bold";
 
 function showCurrentWeather(response) {
   let temperature = Math.round(response.data.main.temp);
+  console.log(response);
   let location = response.data.name;
   let header = document.querySelector(".current-loc");
   header.innerHTML = location;
   displayTemp.innerHTML = temperature;
+  let windSpeed = Math.round(response.data.wind.speed);
+  let windDirection = response.data.wind.deg;
+  displayWindSpeed.innerHTML = `${windSpeed} mph`;
+  displayWindDirection.style.transform = `rotate(${windDirection}deg)`
 }
 
 function getLocation(position) {

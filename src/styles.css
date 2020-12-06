@@ -33,3 +33,17 @@ a:hover {
 .current {
   margin: 30px 0px;
 }
+.fa-tint {
+  color: rgb(39, 161, 231)
+}
+.fa-wind {
+  color: grey
+}
+.fa-sun {
+  color: rgb(255, 230, 87);
+  font-size: 50px;
+}
+
+.fa-arrow-down {
+  color: grey
+}
