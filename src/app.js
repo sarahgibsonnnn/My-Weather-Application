@@ -9,17 +9,18 @@ let displayWeatherDescription = document.querySelector("#current-weather-descrip
 let displayWeatherIcon = document.querySelector("#current-weather-icon");
 let currentUnits = "Celcius";
 let apiKey = "d039aea9f001c8513436c79fb9e6958c";
+let currTime = new Date();
+let currDay = currTime.getDay();
+let formDateTime = document.querySelector("#current-date-time");
+let forecastDay0 = document.querySelector("#forecast-day0");
+let forecastDay1 = document.querySelector("#forecast-day1");
+let forecastDay2 = document.querySelector("#forecast-day2");
+let forecastDay3 = document.querySelector("#forecast-day3");
+let forecastDay4 = document.querySelector("#forecast-day4");
 
 celciusToggle.style.fontWeight = "bold";
-function getDays () {
 
-  let currTime = new Date();
-  let formDateTime = document.querySelector("#current-date-time");
-  let forecastDay0 = document.querySelector("#forecast-day0");
-  let forecastDay1 = document.querySelector("#forecast-day1");
-  let forecastDay2 = document.querySelector("#forecast-day2");
-  let forecastDay3 = document.querySelector("#forecast-day3");
-  let forecastDay4 = document.querySelector("#forecast-day4");
+function getDayOfWeek (day) {
   let days = [
     "Sunday",
     "Monday",
@@ -29,22 +30,15 @@ function getDays () {
     "Friday",
     "Saturday"
   ];
-  let dayOfWeek = days[currTime.getDay()];
-  let day0 = dayOfWeek;
-  forecastDay0.innerHTML = day0;
-  let day1 = days[currTime.getDay() + 1];
-  forecastDay1.innerHTML = day1;
-  let day2 = days[currTime.getDay() + 2];
-  forecastDay2.innerHTML = day2;
-  let day3 = days[currTime.getDay() + 3];
-  forecastDay3.innerHTML = day3;
-  let day4 = days[currTime.getDay() + 4];
-  forecastDay4.innerHTML = day4;
+  return days[day];
+}
+
+function getCurrentDayTime () {
   let hour = currTime.getHours();
   let minute = currTime.getMinutes();
+  let dayOfWeek = getDayOfWeek(currDay);
 
   formDateTime.innerHTML = `${dayOfWeek} ${hour}:${minute}`;
-
 }
 function getIcon(id) {
   let iconClass = displayWeatherIcon.className;
@@ -126,9 +120,22 @@ function showCurrentWeather(response) {
 
 function showForecast (response) {
 //day 0
+
+let day0 = getDayOfWeek(currDay);
 let day0Temperature = Math.round(response.data.daily[0].temp.day);
+forecastDay0.innerHTML = day0;
 let forecastDay0Temp = document.querySelector("#forecast-day0-temp");
 forecastDay0Temp.innerHTML = `${day0Temperature} °C`;
+
+let day1 = getDayOfWeek(currDay + 1);
+forecastDay1.innerHTML = day1;
+let day2 = getDayOfWeek(currDay + 2);
+forecastDay2.innerHTML = day2;
+let day3 = getDayOfWeek(currDay + 3);
+forecastDay3.innerHTML = day3;
+let day4 = getDayOfWeek(currDay + 4);
+forecastDay4.innerHTML = day4;
+
 
 //day 1
 let day1Temperature = Math.round(response.data.daily[1].temp.day);
@@ -163,10 +170,11 @@ function getLocation(position) {
 
 function getCurrent() {
   navigator.geolocation.getCurrentPosition(getLocation);
+  getCurrentDayTime()
 }
 
 getCurrent()
-getDays()
+
 
 currentButton.addEventListener("click", getCurrent);
 
