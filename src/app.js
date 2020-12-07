@@ -12,7 +12,6 @@ let apiKey = "d039aea9f001c8513436c79fb9e6958c";
 let currTime = new Date();
 let currDay = currTime.getDay();
 let formDateTime = document.querySelector("#current-date-time");
-let forecastDay0 = document.querySelector("#forecast-day0");
 let forecastDay1 = document.querySelector("#forecast-day1");
 let forecastDay2 = document.querySelector("#forecast-day2");
 let forecastDay3 = document.querySelector("#forecast-day3");
@@ -40,9 +39,9 @@ function getCurrentDayTime () {
 
   formDateTime.innerHTML = `${dayOfWeek} ${hour}:${minute}`;
 }
-function getIcon(id) {
-  let iconClass = displayWeatherIcon.className;
-  let iconColor = displayWeatherIcon.style.color;
+function getIcon(id, element) {
+  let iconClass = element.className;
+  let iconColor = element.style.color;
   let background = "";
 
   switch (true) {
@@ -68,12 +67,12 @@ function getIcon(id) {
       break;
     case id >= 500:
       iconClass = "fas fa-cloud-showers-heavy";
-      iconColor = "blue";
+      iconColor = "rgb(67, 67, 133)";
       background = ""
       break;
     case id >= 300:
       iconClass = "fas fa-cloud-rain";
-      iconColor = "blue";
+      iconColor = "rgb(67, 67, 133)";
       background = ""
       break;
     case id >= 200:
@@ -83,8 +82,8 @@ function getIcon(id) {
       break;
   }
   
-  displayWeatherIcon.className = iconClass;
-  displayWeatherIcon.style.color = iconColor;
+  element.className = iconClass + " forecast-icon";
+  element.style.color = iconColor;
 }
 
 function showCity(response) {
@@ -112,47 +111,98 @@ function showCurrentWeather(response) {
 
 //set icon from description ID
 
-  let weatherDescID = Number(response.data.current.weather[0].id);
+  let weatherDescID = response.data.current.weather[0].id;
 
-  getIcon(weatherDescID)
+  getIcon(weatherDescID,displayWeatherIcon)
 
 }
 
 function showForecast (response) {
 //day 0
-
-let day0 = getDayOfWeek(currDay);
-let day0Temperature = Math.round(response.data.daily[0].temp.day);
-forecastDay0.innerHTML = day0;
-let forecastDay0Temp = document.querySelector("#forecast-day0-temp");
-forecastDay0Temp.innerHTML = `${day0Temperature} °C`;
-
-let day1 = getDayOfWeek(currDay + 1);
-forecastDay1.innerHTML = day1;
-let day2 = getDayOfWeek(currDay + 2);
-forecastDay2.innerHTML = day2;
-let day3 = getDayOfWeek(currDay + 3);
-forecastDay3.innerHTML = day3;
-let day4 = getDayOfWeek(currDay + 4);
-forecastDay4.innerHTML = day4;
-
-
-//day 1
-let day1Temperature = Math.round(response.data.daily[1].temp.day);
-let forecastDay1Temp = document.querySelector("#forecast-day1-temp");
-forecastDay1Temp.innerHTML = `${day0Temperature} °C`;
-//day 2
-let day2Temperature = Math.round(response.data.daily[2].temp.day);
-let forecastDay2Temp = document.querySelector("#forecast-day2-temp");
-forecastDay2Temp.innerHTML = `${day2Temperature} °C`;
-//day 3
-let day3Temperature = Math.round(response.data.daily[3].temp.day);
-let forecastDay3Temp = document.querySelector("#forecast-day3-temp");
-forecastDay3Temp.innerHTML = `${day3Temperature} °C`;
-//day 4
-let day4Temperature = Math.round(response.data.daily[4].temp.day);
-let forecastDay4Temp = document.querySelector("#forecast-day4-temp");
-forecastDay4Temp.innerHTML = `${day4Temperature} °C`;
+console.log(response);
+  function getForecastTemp(day) {
+    return Math.round(response.data.daily[day].temp.day)
+  }
+  function getWeatherDesc(day) {
+    return response.data.daily[day].weather[0].main
+  }
+  function getWeatherDescID(day) {
+   console.log(response);
+   return response.data.daily[day].weather[0].id
+    
+  }
+  function updateForecastHTML(day,dayOfWeek,temp,desc,iconID) {
+    let forecastTemp = document.querySelector(`#forecast-day${day}-temp`);
+     forecastTemp.innerHTML = `${temp} °C`;
+    let dayHTML = document.querySelector(`#forecast-day${day}`);
+    dayHTML.innerHTML = dayOfWeek;
+    let icon = document.querySelector(`#forecast-day${day}-icon`);
+    let forecastDescription = document.querySelector(`#forecast-day${day}-description`)
+    forecastDescription.innerHTML = desc;
+    getIcon(iconID,icon)
+   
+ }
+  let forecast = [
+    {
+      dayNumber: 0,
+      dayOfWeek: getDayOfWeek(currDay),
+      temp: getForecastTemp(currDay),
+      desc: getWeatherDesc(currDay),
+      iconID: getWeatherDescID(currDay),
+    },
+    {
+      dayNumber: 1,
+      dayOfWeek: getDayOfWeek(currDay + 1),
+      temp: getForecastTemp(currDay + 1),
+      desc: getWeatherDesc(currDay + 1),
+      iconID: getWeatherDescID(currDay + 1),
+    },
+    {
+      dayNumber: 2,
+      dayOfWeek: getDayOfWeek(currDay + 2),
+      temp: getForecastTemp(currDay + 2),
+      desc: getWeatherDesc(currDay + 2),
+      iconID: getWeatherDescID(currDay + 2),
+    },
+    {
+      dayNumber: 3,
+      dayOfWeek: getDayOfWeek(currDay + 3),
+      temp: getForecastTemp(currDay + 3),
+      desc: getWeatherDesc(currDay + 3),
+      iconID: getWeatherDescID(currDay + 3),
+    },
+    {
+      dayNumber: 4,
+      dayOfWeek: getDayOfWeek(currDay + 4),
+      temp: getForecastTemp(currDay + 4),
+      desc: getWeatherDesc(currDay + 4),
+      iconID: getWeatherDescID(currDay + 4),
+    }
+  ]
+forecast.forEach(Element => {
+  updateForecastHTML(Element.dayNumber, Element.dayOfWeek, Element.temp,Element.desc,Element.iconID)
+});
+   // forecastDay0.innerHTML = day0;
+ 
+  let day1 = getDayOfWeek(currDay + 1);
+  forecastDay1.innerHTML = day1;
+  let forecastDay1Temp = document.querySelector("#forecast-day1-temp");
+  forecastDay1Temp.innerHTML = `${forecast[1].temp} °C`;
+  //day 2
+  let day2 = getDayOfWeek(currDay + 2);
+  forecastDay2.innerHTML = day2;
+  let forecastDay2Temp = document.querySelector("#forecast-day2-temp");
+  forecastDay2Temp.innerHTML = `${forecast[2].temp} °C`;
+  //day 3
+  let day3 = getDayOfWeek(currDay + 3);
+  forecastDay3.innerHTML = day3;
+  let forecastDay3Temp = document.querySelector("#forecast-day3-temp");
+  forecastDay3Temp.innerHTML = `${forecast[3].temp} °C`;
+  //day 4
+  let day4 = getDayOfWeek(currDay + 4);
+  forecastDay4.innerHTML = day4;
+  let forecastDay4Temp = document.querySelector("#forecast-day4-temp");
+  forecastDay4Temp.innerHTML = `${forecast[4].temp} °C`;
 }
 
 function getLocation(position) {
