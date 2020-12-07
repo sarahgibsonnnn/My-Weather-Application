@@ -1,5 +1,6 @@
 let fahrenheightToggle = document.querySelector("#fahrenheit-link");
 let celciusToggle = document.querySelector("#celcius-link");
+let currentButton = document.querySelector(".current");
 let displayTemp = document.querySelector(".current-temp");
 let displayPrecipitation = document.querySelector("#precipitation");
 let displayWindSpeed = document.querySelector("#wind-speed");
@@ -10,7 +11,41 @@ let currentUnits = "Celcius";
 let apiKey = "d039aea9f001c8513436c79fb9e6958c";
 
 celciusToggle.style.fontWeight = "bold";
+function getDays () {
 
+  let currTime = new Date();
+  let formDateTime = document.querySelector("#current-date-time");
+  let forecastDay0 = document.querySelector("#forecast-day0");
+  let forecastDay1 = document.querySelector("#forecast-day1");
+  let forecastDay2 = document.querySelector("#forecast-day2");
+  let forecastDay3 = document.querySelector("#forecast-day3");
+  let forecastDay4 = document.querySelector("#forecast-day4");
+  let days = [
+    "Sunday",
+    "Monday",
+    "Tuesday",
+    "Wednesday",
+    "Thursday",
+    "Friday",
+    "Saturday"
+  ];
+  let dayOfWeek = days[currTime.getDay()];
+  let day0 = dayOfWeek;
+  forecastDay0.innerHTML = day0;
+  let day1 = days[currTime.getDay() + 1];
+  forecastDay1.innerHTML = day1;
+  let day2 = days[currTime.getDay() + 2];
+  forecastDay2.innerHTML = day2;
+  let day3 = days[currTime.getDay() + 3];
+  forecastDay3.innerHTML = day3;
+  let day4 = days[currTime.getDay() + 4];
+  forecastDay4.innerHTML = day4;
+  let hour = currTime.getHours();
+  let minute = currTime.getMinutes();
+
+  formDateTime.innerHTML = `${dayOfWeek} ${hour}:${minute}`;
+
+}
 function getIcon(id) {
   let iconClass = displayWeatherIcon.className;
   let iconColor = displayWeatherIcon.style.color;
@@ -86,10 +121,31 @@ function showCurrentWeather(response) {
   let weatherDescID = Number(response.data.current.weather[0].id);
 
   getIcon(weatherDescID)
-  console.log(response)
- 
-  //let forecastAPI = `api.openweathermap.org/data/2.5/forecast?q=${location}&appid=${apiKey}`;
-  //axios.get(forecastAPI).then(getForecast);
+
+}
+
+function showForecast (response) {
+//day 0
+let day0Temperature = Math.round(response.data.daily[0].temp.day);
+let forecastDay0Temp = document.querySelector("#forecast-day0-temp");
+forecastDay0Temp.innerHTML = `${day0Temperature} °C`;
+
+//day 1
+let day1Temperature = Math.round(response.data.daily[1].temp.day);
+let forecastDay1Temp = document.querySelector("#forecast-day1-temp");
+forecastDay1Temp.innerHTML = `${day0Temperature} °C`;
+//day 2
+let day2Temperature = Math.round(response.data.daily[2].temp.day);
+let forecastDay2Temp = document.querySelector("#forecast-day2-temp");
+forecastDay2Temp.innerHTML = `${day2Temperature} °C`;
+//day 3
+let day3Temperature = Math.round(response.data.daily[3].temp.day);
+let forecastDay3Temp = document.querySelector("#forecast-day3-temp");
+forecastDay3Temp.innerHTML = `${day3Temperature} °C`;
+//day 4
+let day4Temperature = Math.round(response.data.daily[4].temp.day);
+let forecastDay4Temp = document.querySelector("#forecast-day4-temp");
+forecastDay4Temp.innerHTML = `${day4Temperature} °C`;
 }
 
 function getLocation(position) {
@@ -98,50 +154,23 @@ function getLocation(position) {
   let apiURL = `https://api.openweathermap.org/data/2.5/onecall?lat=${latitude}&lon=${longitude}&appid=${apiKey}&units=metric`
   let cityAPIURL = `https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&appid=${apiKey}&units=metric`;
   axios.get(cityAPIURL).then(showCity);
-  axios.get(apiURL).then(showCurrentWeather);
+  let callAPI = axios.get(apiURL)
+
+  callAPI.then(showCurrentWeather);
+  callAPI.then(showForecast);
 }
 
-let currentButton = document.querySelector(".current");
 
 function getCurrent() {
   navigator.geolocation.getCurrentPosition(getLocation);
 }
 
 getCurrent()
+getDays()
 
 currentButton.addEventListener("click", getCurrent);
 
-let currTime = new Date();
-let formDateTime = document.querySelector("#current-date-time");
-let forecastDay0 = document.querySelector("#forecast-day0");
-let forecastDay1 = document.querySelector("#forecast-day1");
-let forecastDay2 = document.querySelector("#forecast-day2");
-let forecastDay3 = document.querySelector("#forecast-day3");
-let forecastDay4 = document.querySelector("#forecast-day4");
-let days = [
-  "Sunday",
-  "Monday",
-  "Tuesday",
-  "Wednesday",
-  "Thursday",
-  "Friday",
-  "Saturday"
-];
-let dayOfWeek = days[currTime.getDay()];
-let day0 = dayOfWeek;
-forecastDay0.innerHTML = day0;
-let day1 = days[currTime.getDay() + 1];
-forecastDay1.innerHTML = day1;
-let day2 = days[currTime.getDay() + 2];
-forecastDay2.innerHTML = day2;
-let day3 = days[currTime.getDay() + 3];
-forecastDay3.innerHTML = day3;
-let day4 = days[currTime.getDay() + 4];
-forecastDay4.innerHTML = day4;
-let hour = currTime.getHours();
-let minute = currTime.getMinutes();
 
-formDateTime.innerHTML = `${dayOfWeek} ${hour}:${minute}`;
 
 let searchForm = document.querySelector("#search-form");
 
@@ -149,7 +178,9 @@ function findCoordinates(response) {
   let latitude = response.data.coord.lat;
   let longitude = response.data.coord.lon;
   let apiURL = `https://api.openweathermap.org/data/2.5/onecall?lat=${latitude}&lon=${longitude}&appid=${apiKey}&units=metric`
-  axios.get(apiURL).then(showCurrentWeather);
+  let callAPI = axios.get(apiURL)
+  callAPI.then(showCurrentWeather);
+  callAPI.then(showForecast);
 
 }
 
