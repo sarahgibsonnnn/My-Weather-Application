@@ -86,7 +86,7 @@ function showCurrentWeather(response) {
   let weatherDescID = Number(response.data.current.weather[0].id);
 
   getIcon(weatherDescID)
-  
+  console.log(response)
  
   //let forecastAPI = `api.openweathermap.org/data/2.5/forecast?q=${location}&appid=${apiKey}`;
   //axios.get(forecastAPI).then(getForecast);
@@ -113,6 +113,11 @@ currentButton.addEventListener("click", getCurrent);
 
 let currTime = new Date();
 let formDateTime = document.querySelector("#current-date-time");
+let forecastDay0 = document.querySelector("#forecast-day0");
+let forecastDay1 = document.querySelector("#forecast-day1");
+let forecastDay2 = document.querySelector("#forecast-day2");
+let forecastDay3 = document.querySelector("#forecast-day3");
+let forecastDay4 = document.querySelector("#forecast-day4");
 let days = [
   "Sunday",
   "Monday",
@@ -123,6 +128,16 @@ let days = [
   "Saturday"
 ];
 let dayOfWeek = days[currTime.getDay()];
+let day0 = dayOfWeek;
+forecastDay0.innerHTML = day0;
+let day1 = days[currTime.getDay() + 1];
+forecastDay1.innerHTML = day1;
+let day2 = days[currTime.getDay() + 2];
+forecastDay2.innerHTML = day2;
+let day3 = days[currTime.getDay() + 3];
+forecastDay3.innerHTML = day3;
+let day4 = days[currTime.getDay() + 4];
+forecastDay4.innerHTML = day4;
 let hour = currTime.getHours();
 let minute = currTime.getMinutes();
 
