@@ -40,6 +40,9 @@ function getDayOfWeek (day) {
 function getCurrentDayTime () {
   let hour = currTime.getHours();
   let minute = currTime.getMinutes();
+  if (minute <10) {
+    minute = `0${minute}`
+  };
   let dayOfWeek = getDayOfWeek(currDay);
 
   formDateTime.innerHTML = `${dayOfWeek} ${hour}:${minute}`;
