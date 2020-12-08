@@ -50,7 +50,7 @@ a:hover {
 .form-control {
   max-width: 300px;
 }
-.units {
+.unit-toggle {
   color: black;
   font-size: 16px;
 }
@@ -76,4 +76,8 @@ a:hover {
 }
 .fa-arrow-down {
   color: grey
+}
+.forecast-display {
+  justify-content: center;
+ 
 }

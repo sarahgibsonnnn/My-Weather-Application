@@ -19,6 +19,8 @@ let forecastDay2 = document.querySelector("#forecast-day2");
 let forecastDay3 = document.querySelector("#forecast-day3");
 let forecastDay4 = document.querySelector("#forecast-day4");
 let background = "";
+let allTemperatures = document.querySelectorAll(".temp-value");
+let allUnits = document.querySelectorAll(".units");
 
 celciusToggle.style.fontWeight = "bold";
 
@@ -124,7 +126,7 @@ function showCurrentWeather(response) {
 
 function showForecast (response) {
 //day 0
-console.log(response);
+
   function getForecastTemp(day) {
     return Math.round(response.data.daily[day].temp.day)
   }
@@ -132,13 +134,13 @@ console.log(response);
     return response.data.daily[day].weather[0].main
   }
   function getWeatherDescID(day) {
-   console.log(response);
+   
    return response.data.daily[day].weather[0].id
     
   }
   function updateForecastHTML(day,dayOfWeek,temp,desc,iconID) {
     let forecastTemp = document.querySelector(`#forecast-day${day}-temp`);
-     forecastTemp.innerHTML = `${temp} °C`;
+     forecastTemp.innerHTML = temp;
     let dayHTML = document.querySelector(`#forecast-day${day}`);
     dayHTML.innerHTML = dayOfWeek;
     let icon = document.querySelector(`#forecast-day${day}-icon`);
@@ -192,22 +194,22 @@ forecast.forEach(Element => {
   let day1 = getDayOfWeek(currDay + 1);
   forecastDay1.innerHTML = day1;
   let forecastDay1Temp = document.querySelector("#forecast-day1-temp");
-  forecastDay1Temp.innerHTML = `${forecast[1].temp} °C`;
+  forecastDay1Temp.innerHTML = forecast[1].temp;
   //day 2
   let day2 = getDayOfWeek(currDay + 2);
   forecastDay2.innerHTML = day2;
   let forecastDay2Temp = document.querySelector("#forecast-day2-temp");
-  forecastDay2Temp.innerHTML = `${forecast[2].temp} °C`;
+  forecastDay2Temp.innerHTML = forecast[2].temp
   //day 3
   let day3 = getDayOfWeek(currDay + 3);
   forecastDay3.innerHTML = day3;
   let forecastDay3Temp = document.querySelector("#forecast-day3-temp");
-  forecastDay3Temp.innerHTML = `${forecast[3].temp} °C`;
+  forecastDay3Temp.innerHTML = forecast[3].temp;
   //day 4
   let day4 = getDayOfWeek(currDay + 4);
   forecastDay4.innerHTML = day4;
   let forecastDay4Temp = document.querySelector("#forecast-day4-temp");
-  forecastDay4Temp.innerHTML = `${forecast[4].temp} °C`;
+  forecastDay4Temp.innerHTML = forecast[4].temp;
 }
 
 function getLocation(position) {
@@ -261,7 +263,13 @@ searchForm.addEventListener("submit", searchCity);
 
 function showFahrenheit() {
   if (currentUnits === "Celcius") {
-    displayTemp.innerHTML = Math.round(displayTemp.innerHTML * (9/5) + 32);
+    allTemperatures.forEach(Element => {
+      Element.innerHTML = Math.round(Element.innerHTML * (9/5) + 32)
+    });
+    let units = " °F";
+    allUnits.forEach(Element => {
+       Element.innerHTML = units;
+    });
     currentUnits = "Fahrenheit"
     fahrenheightToggle.style.fontWeight = "bold"
     celciusToggle.style.fontWeight = "normal"
@@ -270,12 +278,21 @@ function showFahrenheit() {
 
 function showCelcius() {
   if (currentUnits === "Fahrenheit") {
-    displayTemp.innerHTML = Math.round((displayTemp.innerHTML -32) * (5/9));
+    allTemperatures.forEach(Element => {
+      Element.innerHTML = Math.round((Element.innerHTML -32) * (5/9))
+    });
+    let units = " °C";
+    allUnits.forEach(Element => {
+       Element.innerHTML = units;
+    });
     currentUnits = "Celcius"
     fahrenheightToggle.style.fontWeight = "normal"
     celciusToggle.style.fontWeight = "bold"
   }  
 }
-
+let units = " °C";
+    allUnits.forEach(Element => {
+       Element.innerHTML = units;
+    });
 fahrenheightToggle.addEventListener("click", showFahrenheit);
 celciusToggle.addEventListener("click", showCelcius);
