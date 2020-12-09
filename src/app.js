@@ -23,6 +23,12 @@ let allTemperatures = document.querySelectorAll(".temp-value");
 let allUnits = document.querySelectorAll(".units");
 
 celciusToggle.style.fontWeight = "bold";
+Date.prototype.addDays = function(days) {
+  var date = new Date(this.valueOf());
+  date.setDate(date.getDate() + days);
+  return date;
+}
+console.log(currTime.addDays(1))
 
 function getDayOfWeek (day) {
   let days = [
@@ -34,7 +40,7 @@ function getDayOfWeek (day) {
     "Friday",
     "Saturday"
   ];
-  return days[day];
+  return days[day.getDay()];
 }
 
 function getCurrentDayTime () {
@@ -43,7 +49,7 @@ function getCurrentDayTime () {
   if (minute <10) {
     minute = `0${minute}`
   };
-  let dayOfWeek = getDayOfWeek(currDay);
+  let dayOfWeek = getDayOfWeek(currTime);
 
   formDateTime.innerHTML = `${dayOfWeek} ${hour}:${minute}`;
 }
@@ -155,61 +161,62 @@ function showForecast (response) {
   let forecast = [
     {
       dayNumber: 0,
-      dayOfWeek: getDayOfWeek(currDay),
+      dayOfWeek: getDayOfWeek(currTime),
       temp: getForecastTemp(currDay),
       desc: getWeatherDesc(currDay),
       iconID: getWeatherDescID(currDay),
     },
     {
       dayNumber: 1,
-      dayOfWeek: getDayOfWeek(currDay + 1),
+      dayOfWeek: getDayOfWeek(currTime.addDays(1)),
       temp: getForecastTemp(currDay + 1),
       desc: getWeatherDesc(currDay + 1),
       iconID: getWeatherDescID(currDay + 1),
     },
     {
       dayNumber: 2,
-      dayOfWeek: getDayOfWeek(currDay + 2),
+      dayOfWeek: getDayOfWeek(currTime.addDays(2)),
       temp: getForecastTemp(currDay + 2),
       desc: getWeatherDesc(currDay + 2),
       iconID: getWeatherDescID(currDay + 2),
     },
     {
       dayNumber: 3,
-      dayOfWeek: getDayOfWeek(currDay + 3),
+      dayOfWeek: getDayOfWeek(currTime.addDays(3)),
       temp: getForecastTemp(currDay + 3),
       desc: getWeatherDesc(currDay + 3),
       iconID: getWeatherDescID(currDay + 3),
     },
     {
       dayNumber: 4,
-      dayOfWeek: getDayOfWeek(currDay + 4),
+      dayOfWeek: getDayOfWeek(currTime.addDays(4)),
       temp: getForecastTemp(currDay + 4),
       desc: getWeatherDesc(currDay + 4),
       iconID: getWeatherDescID(currDay + 4),
     }
   ]
+
 forecast.forEach(Element => {
   updateForecastHTML(Element.dayNumber, Element.dayOfWeek, Element.temp,Element.desc,Element.iconID)
 });
    // forecastDay0.innerHTML = day0;
  
-  let day1 = getDayOfWeek(currDay + 1);
+  let day1 = getDayOfWeek(currTime.addDays(1));
   forecastDay1.innerHTML = day1;
   let forecastDay1Temp = document.querySelector("#forecast-day1-temp");
   forecastDay1Temp.innerHTML = forecast[1].temp;
   //day 2
-  let day2 = getDayOfWeek(currDay + 2);
+  let day2 = getDayOfWeek(currTime.addDays(2));
   forecastDay2.innerHTML = day2;
   let forecastDay2Temp = document.querySelector("#forecast-day2-temp");
   forecastDay2Temp.innerHTML = forecast[2].temp
   //day 3
-  let day3 = getDayOfWeek(currDay + 3);
+  let day3 = getDayOfWeek(currTime.addDays(3));
   forecastDay3.innerHTML = day3;
   let forecastDay3Temp = document.querySelector("#forecast-day3-temp");
   forecastDay3Temp.innerHTML = forecast[3].temp;
   //day 4
-  let day4 = getDayOfWeek(currDay + 4);
+  let day4 = getDayOfWeek(currTime.addDays(4));
   forecastDay4.innerHTML = day4;
   let forecastDay4Temp = document.querySelector("#forecast-day4-temp");
   forecastDay4Temp.innerHTML = forecast[4].temp;
